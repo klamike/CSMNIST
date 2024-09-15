@@ -4,7 +4,7 @@ based on user-defined constraints. It is meant as an easy baseline for
 constrained sequence modeling research, where the goal is to guarantee that
 predicted sequences satisfy certain constraints.
 
-![SumConstraint+OrderedConstraint example](sum.png)
+![N-Queens example](queens.png)
 
 ## Installation
 1. Clone this repository:
@@ -72,7 +72,7 @@ visualize_sample(batch)
 ```
 
 
-Using ORTools, sample N-queens solutions:
+Using ORTools, sample 5x5 N-Queens solutions:
 
 ```python
 from csmnist import CSMNISTDataset, ORToolsGenerator
@@ -98,4 +98,7 @@ solver.NewSearch(db)
 generator = ORToolsGenerator(solver, queens, seed=42)
 
 dataset = CSMNISTDataset(mnist_root='./data', train=True, generator=generator)
+dataloader = DataLoader(dataset, batch_size=4)
+batch = next(iter(dataloader))
+visualize_sample(batch)
 ```
