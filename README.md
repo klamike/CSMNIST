@@ -4,7 +4,7 @@ based on user-defined constraints. It is meant as an easy baseline for
 constrained sequence modeling research, where the goal is to guarantee that
 predicted sequences satisfy certain constraints.
 
-![N-Queens example](queens.png)
+![N-Queens example](images/queens.png)
 
 ## Installation
 1. Clone this repository:
@@ -44,7 +44,7 @@ for images, labels in dataloader:
     # Your training loop here
     pass
 ```
-![AllDifferent example](alldifferent.png)
+![AllDifferent example](images/alldifferent.png)
 
 Using brute force (random sampling), sample ordered sequences with length 3 and sum 10:
 
@@ -71,7 +71,7 @@ dataloader = DataLoader(dataset, batch_size=4)
 batch = next(iter(dataloader))
 visualize_sample(batch)
 ```
-![Sum and Ordered example](sum_ordered.png)
+![Sum and Ordered example](images/sum_ordered.png)
 
 Using ORTools, sample 5x5 N-Queens solutions:
 
@@ -103,4 +103,4 @@ dataloader = DataLoader(dataset, batch_size=4)
 batch = next(iter(dataloader))
 visualize_sample(batch)
 ```
-![N-Queens example](queens.png)
+![N-Queens example](images/queens.png)
