@@ -7,21 +7,13 @@ predicted sequences satisfy certain constraints.
 ## Installation
 1. Clone this repository:
    ```sh
-   git clone https://github.com/klamike/csmnist.git
-   cd csmnist
+   git clone https://github.com/klamike/CSMNIST.git
    ```
 
 2. Install the package:
    ```sh
-   pip install -e .
+   pip install -e CSMNIST
    ```
-
-A conda environment file is also provided:
-   ```sh
-   conda env create -f environment.yml
-   conda activate csmnist
-   ```
-
 
 ## Usage
 

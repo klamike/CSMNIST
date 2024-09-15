@@ -1,7 +1,0 @@
-name: csmnist
-channels:
-  - defaults
-dependencies:
-  - python=3
-  - pytorch::pytorch
-  - pytorch::torchvision
