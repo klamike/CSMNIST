@@ -4,6 +4,8 @@ based on user-defined constraints. It is meant as an easy baseline for
 constrained sequence modeling research, where the goal is to guarantee that
 predicted sequences satisfy certain constraints.
 
+![SumConstraint+OrderedConstraint example](sum.png)
+
 ## Installation
 1. Clone this repository:
    ```sh
@@ -17,8 +19,8 @@ predicted sequences satisfy certain constraints.
 
 ## Usage
 
-Here's a basic example of how to use CSMNIST to generate sequenecs of length 5 
-where each digit can only appear once:
+This section contains a few usage examples. The first example makes use of a custom solver
+for generating sequences of fixed length where all digits are different:
 
 ```python
 from csmnist import CSMNISTDataset, AllDifferentGenerator
@@ -35,7 +37,7 @@ dataset = CSMNISTDataset(mnist_root='./data', train=True, sequences=sequences)
 
 # Use the dataset in your PyTorch DataLoader
 from torch.utils.data import DataLoader
-dataloader = DataLoader(dataset, batch_size=32)
+dataloader = DataLoader(dataset, batch_size=4)
 
 # Iterate through the data
 for images, labels in dataloader:
@@ -43,11 +45,13 @@ for images, labels in dataloader:
     pass
 ```
 
-A more complex example using brute force to satsify `SumConstraint` and `OrderedConstraint`:
+Using brute force (random sampling), sample ordered sequences with length 3 and sum 10:
 
 ```python
 from csmnist import CSMNISTDataset, BruteForceGenerator, LengthConstraint
 from csmnist.constraints import SumConstraint, OrderedConstraint, LengthConstraint
+from csmnist.viz import visualize_sample
+from torch.utils.data import DataLoader
 
 generator = BruteForceGenerator(
     constraints=[
@@ -57,21 +61,25 @@ generator = BruteForceGenerator(
     ],
     min_length=3,
     max_length=3,
-    max_tries_per_sample=1000,
+    max_tries_per_sample=float("inf"),
     seed=42
 )
 
-dataset = CSMNISTDataset(root='./data', train=True, generator=generator)
+dataset = CSMNISTDataset(mnist_root='./data', train=True, generator=generator)
+dataloader = DataLoader(dataset, batch_size=4)
+batch = next(iter(dataloader))
+visualize_sample(batch)
 ```
 
 
-Using ORTools to generate N-queens solutions:
+Using ORTools, sample N-queens solutions:
 
 ```python
 from csmnist import CSMNISTDataset, ORToolsGenerator
 
 from ortools.constraint_solver.pywrapcp import Solver
 
+# Define the ORTools model like usual
 board_size = 5
 B = range(board_size)
 
@@ -86,8 +94,8 @@ solver.Add(solver.AllDifferent([queens[i] - i for i in B]))
 db = solver.Phase(queens, solver.CHOOSE_FIRST_UNBOUND, solver.ASSIGN_MIN_VALUE)
 solver.NewSearch(db)
 
+# Create the CSMNIST generator and dataset
 generator = ORToolsGenerator(solver, queens, seed=42)
 
-# Create the CSMNIST dataset
 dataset = CSMNISTDataset(mnist_root='./data', train=True, generator=generator)
 ```
