@@ -1,7 +1,7 @@
 # CSMNIST: Constrained Sequences of MNIST Digits
 CSMNIST is a flexible dataset generator that creates sequences of MNIST digits
 based on user-defined constraints. It is meant as an easy baseline for
-constrained sequence modeling research, where the goal is guarantee that
+constrained sequence modeling research, where the goal is to guarantee that
 predicted sequences satisfy certain constraints.
 
 ## Installation
