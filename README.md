@@ -44,6 +44,7 @@ for images, labels in dataloader:
     # Your training loop here
     pass
 ```
+![AllDifferent example](alldifferent.png)
 
 Using brute force (random sampling), sample ordered sequences with length 3 and sum 10:
 
@@ -70,7 +71,7 @@ dataloader = DataLoader(dataset, batch_size=4)
 batch = next(iter(dataloader))
 visualize_sample(batch)
 ```
-
+![Sum and Ordered example](sum_ordered.png)
 
 Using ORTools, sample 5x5 N-Queens solutions:
 
@@ -102,3 +103,4 @@ dataloader = DataLoader(dataset, batch_size=4)
 batch = next(iter(dataloader))
 visualize_sample(batch)
 ```
+![N-Queens example](queens.png)
