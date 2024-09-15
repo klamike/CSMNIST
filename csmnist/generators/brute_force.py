@@ -41,3 +41,5 @@ class BruteForceGenerator(Generator):
 
             if all(c.satisfy(sequence) for c in self.constraints):
                 return sequence
+        
+        raise RuntimeError("Could not generate a sequence that satisfies the constraints.")
