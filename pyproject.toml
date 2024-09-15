@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "csmnist"
+version = "0.0.1"
+description = "Constrained Sequences of MNIST Digits"
+readme = "README.md"
+requires-python = "<4"
+authors = [{ name = "Michael Klamkin", email = "klam@gatech.edu" }]
+dependencies = [
+    "torch",
+    "torchvision",
+    "numpy",
+]
