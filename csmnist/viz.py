@@ -1,7 +1,10 @@
-import matplotlib.pyplot as plt
 import torch
 
 def visualize_sample(sample, show=True):
+    try:
+        import matplotlib.pyplot as plt
+    except ImportError:
+        raise ImportError("matplotlib is required for visualization.")
     images, labels = sample
     
     if isinstance(images, torch.Tensor):
