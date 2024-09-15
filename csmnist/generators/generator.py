@@ -10,7 +10,7 @@ class Generator(ABC):
         constraints=None,
         seed=None
     ):
-        self.constraints = constraints
+        self.constraints = constraints or []
         self.rng = torch.Generator().manual_seed(seed)
 
         assert all(isinstance(c, Constraint) for c in self.constraints), \
