@@ -6,7 +6,6 @@ from torch import Tensor
 
 
 class Constraint(ABC):
-    @abstractmethod
     def satisfy(self, sequence: list[int] | Tensor | ndarray):
         if isinstance(sequence, (Tensor, ndarray)):
             assert sequence.ndim == 1, "Sequence must be a 1D Tensor"
