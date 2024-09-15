@@ -6,13 +6,13 @@ predicted sequences satisfy certain constraints.
 
 ## Installation
 1. Clone this repository:
-   ```
+   ```sh
    git clone https://github.com/klamike/csmnist.git
    cd csmnist
    ```
 
 2. Create and activate the conda environment:
-   ```
+   ```sh
    conda env create -f environment.yml
    conda activate csmnist
    ```
