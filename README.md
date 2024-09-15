@@ -11,7 +11,12 @@ predicted sequences satisfy certain constraints.
    cd csmnist
    ```
 
-2. Create and activate the conda environment:
+2. Install the package:
+   ```sh
+   pip install -e .
+   ```
+
+A conda environment file is also provided:
    ```sh
    conda env create -f environment.yml
    conda activate csmnist
