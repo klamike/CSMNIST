@@ -11,7 +11,10 @@ class Generator(ABC):
         seed=None
     ):
         self.constraints = constraints or []
-        self.rng = torch.Generator().manual_seed(seed)
+        self.rng = torch.Generator()
+
+        if seed is not None:
+            self.rng.manual_seed(seed)
 
         assert all(isinstance(c, Constraint) for c in self.constraints), \
             "All constraints must be instances of Constraint class"

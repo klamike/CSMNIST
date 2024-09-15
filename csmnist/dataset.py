@@ -2,14 +2,14 @@ from __future__ import annotations
 from warnings import warn
 
 import torch
-from torch.utils.data import Dataset
+from torch.utils.data import IterableDataset
 from torchvision.datasets import MNIST
 from torchvision import transforms
 
 
-class CSMNISTDataset(Dataset):
+class CSMNISTDataset(IterableDataset):
     """
-    A torch Dataset for CSMNIST.
+    A torch IterableDataset for CSMNIST.
     
     Args:
         root (str): Root directory where the dataset is saved.
@@ -36,7 +36,10 @@ class CSMNISTDataset(Dataset):
         self.generator = generator
 
         self.digits = self._group_by_digit()
-        self.rng = torch.Generator().manual_seed(seed)
+        self.rng = torch.Generator()
+
+        if seed is not None:
+            self.rng.manual_seed(seed)
 
         if self.sequences is None and self.generator is None:
             raise ValueError("For sequences to be generated on the fly, a generator must be provided.")
@@ -53,15 +56,16 @@ class CSMNISTDataset(Dataset):
         self.num_digits = [len(d) for d in digits]
         return digits
 
-    def __len__(self):
-        return len(self.mnist)
-
-    def __getitem__(self, idx):
-        if self.sequences:
-            sequence = self.sequences[idx]
+    def __iter__(self):
+        if self.sequences is not None:
+            for sequence in self.sequences:
+                yield self._process(sequence)
         else:
-            sequence = self.generator.generate()
-        
+            while True:
+                sequence = self.generator.generate()
+                yield self._process(sequence)
+
+    def _process(self, sequence):
         images = list()
         for d in sequence:
             random_idx = torch.randint(0, self.num_digits[d], (1,), generator=self.rng)

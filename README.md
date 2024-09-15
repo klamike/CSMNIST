@@ -38,7 +38,7 @@ dataset = CSMNISTDataset(mnist_root='./data', train=True, sequences=sequences)
 
 # Use the dataset in your PyTorch DataLoader
 from torch.utils.data import DataLoader
-dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+dataloader = DataLoader(dataset, batch_size=32)
 
 # Iterate through the data
 for images, labels in dataloader:
