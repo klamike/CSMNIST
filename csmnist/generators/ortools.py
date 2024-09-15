@@ -21,14 +21,14 @@ class ORToolsGenerator(Generator):
         generator = ORToolsGenerator(solver, queens, seed=42)
         ```
     """
-    def __init__(self, solver: Solver, vars, seed=None):
-        super().__init__(None, seed)
+    def __init__(self, solver: Solver, vars, seed=None, **kwargs):
+        super().__init__(None, seed, **kwargs)
 
         self.solver = solver
         self.vars = vars
 
 
-    def generate(self):
+    def _generate(self):
         has_next = self.solver.NextSolution()
         if not has_next:
             self.solver.EndSearch()

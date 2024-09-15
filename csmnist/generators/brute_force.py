@@ -4,8 +4,8 @@ from csmnist.generators.generator import Generator
 
 
 class BruteForceGenerator(Generator):
-    def __init__(self, constraints=None, min_length=1, max_length=10, max_tries_per_sample=1000, seed=None):
-        super().__init__(constraints, seed)
+    def __init__(self, constraints=None, min_length=1, max_length=10, max_tries_per_sample=1000, seed=None, **kwargs):
+        super().__init__(constraints, seed, **kwargs)
 
         assert min_length <= max_length, \
             "min_length must be less than or equal to max_length"
@@ -20,7 +20,7 @@ class BruteForceGenerator(Generator):
         self.max_length = max_length
         self.max_tries_per_sample = max_tries_per_sample
 
-    def generate(self):
+    def _generate(self):
         counter = 0
         while counter < self.max_tries_per_sample:
             counter += 1
@@ -39,7 +39,8 @@ class BruteForceGenerator(Generator):
                 generator=self.rng
             )
 
-            if all(c.satisfy(sequence) for c in self.constraints):
+            if all(c.satisfy(sequence) for c in self.constraints) and \
+                not self.is_duplicate(sequence):
                 return sequence
         
         raise RuntimeError("Could not generate a sequence that satisfies the constraints.")

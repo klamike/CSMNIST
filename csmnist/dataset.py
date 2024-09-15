@@ -61,6 +61,7 @@ class CSMNISTDataset(IterableDataset):
             for sequence in self.sequences:
                 yield self._process(sequence)
         else:
+            self.generator.reset_epoch()
             while True:
                 sequence = self.generator.generate()
                 yield self._process(sequence)
